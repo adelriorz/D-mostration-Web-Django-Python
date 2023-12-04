@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Line Chart</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="mb-4">Line Chart</h2>
+        <form method="get" action="" class="mb-4">
+            <!-- Bootstrap form styling -->
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
+                    <label for="start_date">Start Date</label>
+                    <input type="date" class="form-control" id="start_date" name="start_date" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="end_date">End Date</label>
+                    <input type="date" class="form-control" id="end_date" name="end_date" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <button type="submit" class="btn btn-primary">Generate Chart</button>
+                </div>
+                {% if chart_image %}
+                    <!-- Add a button to download the chart as PNG -->
+                    <div class="col-md-3 mb-3">
+                        <a href="#" class="btn btn-success" id="downloadBtn">Download PNG</a>
+                    </div>
+                {% endif %}
+            </div>
+        </form>
+
+        {% if chart_image %}
+            <!-- Bootstrap responsive image styling -->
+            <img src="data:image/png;base64,{{ chart_image }}" alt="Line Chart" class="img-fluid" id="chartImage">
+        {% endif %}
+    </div>
+
+    <!-- Include Bootstrap JS and Popper.js (for Bootstrap dropdowns) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- Include JavaScript to handle chart download -->
+    <script>
+        // Function to download the chart image as PNG
+        function downloadChart() {
+            var chartImage = document.getElementById('chartImage');
+            var link = document.createElement('a');
+            link.href = chartImage.src;
+            link.download = 'line_chart.png';
+            link.click();
+        }
+
+        // Attach the download function to the button click event
+        document.getElementById('downloadBtn').addEventListener('click', downloadChart);
+    </script>
+</body>
+</html>
